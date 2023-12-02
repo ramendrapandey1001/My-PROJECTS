@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8" />
@@ -18,8 +19,7 @@
         .topnav {
             overflow: hidden;
             background-color: #0077be;
-            margin:20px
-            
+            margin: 20px
         }
 
             .topnav a {
@@ -29,7 +29,7 @@
                 text-align: center;
                 padding: 14px 16px;
                 text-decoration: none;
-                padding-top:68px;
+                padding-top: 68px;
             }
 
             .topnav img {
@@ -49,11 +49,11 @@
                 color: white;
             }
     </style>
-    <div class="topnav" >
-        <img src="~/Images/cdaclogo4.jpg"  style="width:100px">
-        <a href="index">Logoff</a>
-        <a href="register">Register</a>
-        <a href="about">About Us</a>
+    <div class="topnav">
+        <img src="~/Images/cdaclogo4.jpg" style="width:100px">
+        @Html.ActionLink("Logoff", "Index", "Home")
+        @Html.ActionLink("Register", "register", "Home")
+        @Html.ActionLink("About Us", "about", "Home")
     </div>
     <div class="container body-content">
         @RenderBody()

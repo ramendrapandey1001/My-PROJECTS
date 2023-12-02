@@ -17,6 +17,7 @@ namespace OnlineTestWebApp.Controllers
         Login login = new Login();
         SqlUserDatabase _db = new SqlUserDatabase();
         SqlExamDatabase _exam = new SqlExamDatabase();
+
         // GET: index
         public ActionResult Index()
         { 
@@ -64,8 +65,8 @@ namespace OnlineTestWebApp.Controllers
         public ActionResult test( )
         {
             
-            List<Questions> questions = QuestionBank.GetQuestions();
-            ViewData["LIST"]=questions;
+           // List<Questions> questions = QuestionBank.GetQuestions();
+           // ViewData["LIST"]=questions;
             return View();
         }
         //GET:submit

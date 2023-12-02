@@ -10,7 +10,7 @@ using MongoDB.Bson;
 
 namespace Data_Access_Layer
 {
-   public class QuestionBank
+  /* public class QuestionBank
     {
         MongoClient mc= new MongoClient("mongodb://localhost:27017 ");
         public static List<Questions> GetQuestions()
@@ -23,5 +23,5 @@ namespace Data_Access_Layer
             return collection.Find(new BsonDocument()).ToList();
         }
 
-    }
+    }*/
 }

@@ -1,4 +1,5 @@
-﻿<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+﻿
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,22 +11,23 @@
         }
 
         .button {
-            display:block;
+            display: block;
             color: black;
-            background-color:whitesmoke;
+            background-color: whitesmoke;
             width: 100px;
             height: 20px;
             text-decoration: none;
-            text-align:center;
-            margin-left:2px;
-            transition:ease-in;
+            text-align: center;
+            margin-left: 2px;
+            transition: ease-in;
         }
 
             .button:hover {
                 color: black;
-                box-shadow:unset;
-                opacity:0.7;
+                box-shadow: unset;
+                opacity: 0.7;
             }
+
         .textfield {
             width: 50%;
             display: inline;
@@ -36,7 +38,7 @@
             margin: 0 auto;
             padding: 20px;
             border: solid black;
-            border-radius:10px
+            border-radius: 10px
         }
 
         .logo {
@@ -60,9 +62,9 @@
                 width: 100%;
                 box-sizing: border-box;
             }
-          .logindiv{
-             
-          }
+
+        .logindiv {
+        }
     </style>
 </head>
 <body>
@@ -71,7 +73,7 @@
 
         <div id="login" style="width: 50%; display: inline-block;">
             <h2>Login</h2>
-        </div> <form action="redirect" style="display: block; width: 300px ;  ">
+        </div> <form action="Home/redirect" method="get" style="display: block; width: 300px ;  ">
 
             <div class="form-group" style="display: block; width: 300px">
                 <label for="username" style="display:inline-block">Username:</label>
@@ -86,7 +88,7 @@
         </form>
 
     </div>
-    
+
     <script>
         const togglePassword = document.querySelector('#togglePassword');
         const password = document.querySelector('#password');
