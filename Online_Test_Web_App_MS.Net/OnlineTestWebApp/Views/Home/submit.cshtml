@@ -1,0 +1,75 @@
+﻿<h1>submit</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles.css">
+    <title>Online Exam</title>
+    <style>
+        .hello:hover {
+            color: darkred;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+
+        h1 {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .subject-container {
+            border: 15px solid rgb(0, 255, 153);
+            width: 520px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .subject:hover {
+            color: rgb(0, 255, 51);
+            font-size: 35px;
+            background-color: #fff;
+            padding: 20px;
+            margin: 10px;
+            border-radius: 5px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .subject h2 {
+            margin-top: 0;
+        }
+
+        .subject p {
+            margin: 20px 0;
+        }
+
+        span {
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <h1 class="hello">Congratulation you are Sucessifully Completed your Exam</h1>
+    <div class="subject-container">
+        <div class="subject">
+            <h2>Question Info</h2>
+            <p>Number of Questions: 100</p>
+            <p>Questions Attempted: <span id="subject1Attempted">75</span></p>
+            <p>Questions Not Attempted: <span id="subject1NotAttempted">25</span></p>
+        </div>
+
+    </div>
+    <a href="index">Finish</a>
+    <!-- <button id="exitButton">Exit</button> -->
+</body>
+</html>
+

@@ -1,0 +1,103 @@
+﻿<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css">
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Login</title>
+    <style>
+
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .button {
+            display:block;
+            color: black;
+            background-color:whitesmoke;
+            width: 100px;
+            height: 20px;
+            text-decoration: none;
+            text-align:center;
+            margin-left:2px;
+            transition:ease-in;
+        }
+
+            .button:hover {
+                color: black;
+                box-shadow:unset;
+                opacity:0.7;
+            }
+        .textfield {
+            width: 50%;
+            display: inline;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            border: solid black;
+            border-radius:10px
+        }
+
+        .logo {
+            width: 100px;
+        }
+
+
+
+        .form-group {
+            margin-bottom: 10px;
+        }
+
+            .form-group label {
+                display: block;
+                margin-bottom: 5px;
+            }
+
+            .form-group input[type="text"],
+            .form-group input[type="password"] {
+                padding: 10px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+          .logindiv{
+             
+          }
+    </style>
+</head>
+<body>
+    <div class="logindiv">
+        <img src="~/Images/Preview-22.png" style=" position:relative;float:right;width:300px;" />
+
+        <div id="login" style="width: 50%; display: inline-block;">
+            <h2>Login</h2>
+        </div> <form action="redirect" style="display: block; width: 300px ;  ">
+
+            <div class="form-group" style="display: block; width: 300px">
+                <label for="username" style="display:inline-block">Username:</label>
+                <input type="text" id="username" name="username" class="textfield">
+            </div>
+            <div class="form-group" style="display:block ;width: 300px">
+                <label for="password" style="display:inline-block">Password:</label>
+                <input type="password" name="password" autocomplete="current-password" required="" id="password" class="textfield">
+                <i class="far fa-eye" id="togglePassword" style="margin-left: -30px; cursor: pointer;"></i>
+            </div>
+            <a href="redirect" class="button">Login</a>
+        </form>
+
+    </div>
+    
+    <script>
+        const togglePassword = document.querySelector('#togglePassword');
+        const password = document.querySelector('#password');
+
+        togglePassword.addEventListener('click', function (e) {
+
+            const type = password.getAttribute('type') === 'password' ? 'text' : 'password';
+            password.setAttribute('type', type);
+
+            this.classList.toggle('fa-eye-slash');
+        });
+    </script>
+</body>
+</html>

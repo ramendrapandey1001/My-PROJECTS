@@ -1,0 +1,225 @@
+﻿@{ ViewBag.title = "Index"; }
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Quiz with Timer</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+
+        .timer {
+            font-size: 24px;
+            margin-top: 20px;
+        }
+
+        .question-container {
+            margin: 20px;
+            padding: 20px;
+            border: 1px solid #ccc;
+            background-color: #f9f9f9;
+        }
+
+        .question {
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+        }
+    </style>
+</head>
+<body>
+    <h1>Online Quiz with Timer</h1>
+    <div class="timer">Time Left: <span id="countdown">10:00</span></div>
+    <div class="question-container" id="questionContainer">
+        <div class="question" id="question">Question goes here...</div>
+        <div class="options" id="options">
+            <label><input type="radio" name="answer" value="option1"> Option 1</label>
+            <label><input type="radio" name="answer" value="option2"> Option 2</label>
+            <label><input type="radio" name="answer" value="option3"> Option 3</label>
+            <label><input type="radio" name="answer" value="option4"> Option 4</label>
+        </div>
+        <button id="nextButton">Next</button>
+    </div>
+
+    <script>
+  let timeLeft = 600; // 10 minutes in seconds
+  let timerInterval;
+  let timerRunning = false;
+
+  const countdown = document.getElementById('countdown');
+  const questionContainer = document.getElementById('questionContainer');
+  const questionElement = document.getElementById('question');
+  const optionsContainer = document.getElementById('options');
+  const nextButton = document.getElementById('nextButton');
+
+  const questions = [
+    {
+      question: "1) Which of the following is single user, single tasking Operating System.?",
+      options: [" Linux", "DOS", "Windows Xp", "Windows 98"],
+      correctAnswer: "DOS"
+    },
+    {
+      question: "2) Linux Operating System was written by?",
+      options: ["Linux Trovald", "Bill Gates", "Dennis Ritchie", "Bill Joy"],
+      correctAnswer: "Linux Trovald"
+    },
+    {
+      question: "3) Which of the following is single user, single tasking Operating System.?",
+      options: [" Linux", "DOS", "Windows Xp", "Windows 98"],
+      correctAnswer: "DOS"
+    },
+    {
+      question: "4) Linux Operating System was written by?",
+      options: ["Linux Trovald", "Bill Gates", "Dennis Ritchie", "Bill Joy"],
+      correctAnswer: "Linux Trovald"
+    },
+    {
+      question: "5) Which of the following is single user, single tasking Operating System.?",
+      options: [" Linux", "DOS", "Windows Xp", "Windows 98"],
+      correctAnswer: "DOS"
+    },
+    {
+      question: "6) Linux Operating System was written by?",
+      options: ["Linux Trovald", "Bill Gates", "Dennis Ritchie", "Bill Joy"],
+      correctAnswer: "Linux Trovald"
+    },
+    {
+      question: "7) Which of the following is single user, single tasking Operating System.?",
+      options: [" Linux", "DOS", "Windows Xp", "Windows 98"],
+      correctAnswer: "DOS"
+    },
+    {
+      question: "8) Linux Operating System was written by?",
+      options: ["Linux Trovald", "Bill Gates", "Dennis Ritchie", "Bill Joy"],
+      correctAnswer: "Linux Trovald"
+    },
+    {
+      question: "9) Which of the following is single user, single tasking Operating System.?",
+      options: [" Linux", "DOS", "Windows Xp", "Windows 98"],
+      correctAnswer: "DOS"
+    },
+    {
+      question: "10) Linux Operating System was written by?",
+      options: ["Linux Trovald", "Bill Gates", "Dennis Ritchie", "Bill Joy"],
+      correctAnswer: "Linux Trovald"
+    },
+    {
+      question: "11) Which of the following is single user, single tasking Operating System.?",
+      options: [" Linux", "DOS", "Windows Xp", "Windows 98"],
+      correctAnswer: "DOS"
+    },
+    {
+      question: "12) Linux Operating System was written by?",
+      options: ["Linux Trovald", "Bill Gates", "Dennis Ritchie", "Bill Joy"],
+      correctAnswer: "Linux Trovald"
+    },
+    {
+      question: "13) Which of the following is single user, single tasking Operating System.?",
+      options: [" Linux", "DOS", "Windows Xp", "Windows 98"],
+      correctAnswer: "DOS"
+    },
+    {
+      question: "14) Linux Operating System was written by?",
+      options: ["Linux Trovald", "Bill Gates", "Dennis Ritchie", "Bill Joy"],
+      correctAnswer: "Linux Trovald"
+    },
+    {
+      question: "15) Which of the following is single user, single tasking Operating System.?",
+      options: [" Linux", "DOS", "Windows Xp", "Windows 98"],
+      correctAnswer: "DOS"
+    },
+    {
+      question: "16) Linux Operating System was written by?",
+      options: ["Linux Trovald", "Bill Gates", "Dennis Ritchie", "Bill Joy"],
+      correctAnswer: "Linux Trovald"
+    },
+    {
+      question: "17) Which of the following is single user, single tasking Operating System.?",
+      options: [" Linux", "DOS", "Windows Xp", "Windows 98"],
+      correctAnswer: "DOS"
+    },
+    {
+      question: "18) Linux Operating System was written by?",
+      options: ["Linux Trovald", "Bill Gates", "Dennis Ritchie", "Bill Joy"],
+      correctAnswer: "Linux Trovald"
+    },
+    {
+      question: "19) Which of the following is single user, single tasking Operating System.?",
+      options: [" Linux", "DOS", "Windows Xp", "Windows 98"],
+      correctAnswer: "DOS"
+    },
+    {
+      question: "20) Linux Operating System was written by?",
+      options: ["Linux Trovald", "Bill Gates", "Dennis Ritchie", "Bill Joy"],
+      correctAnswer: "Linux Trovald"
+    },
+    // Add more questions here...
+  ];
+
+  let currentQuestionIndex = 0;
+
+  function formatTime(seconds) {
+    const minutes = Math.floor(seconds / 60);
+    const remainingSeconds = seconds % 60;
+    return `${minutes}:${remainingSeconds < 10 ? '0' : ''}${remainingSeconds}`;
+  }
+
+  function updateTimerDisplay() {
+    countdown.textContent = formatTime(timeLeft);
+  }
+
+  function startTimer() {
+    if (!timerRunning) {
+      timerRunning = true;
+      timerInterval = setInterval(function() {
+        if (timeLeft > 0) {
+          timeLeft--;
+          updateTimerDisplay();
+        } else {
+          clearInterval(timerInterval);
+          timerRunning = false;
+          alert("Time's up!");
+        }
+      }, 1000); // Update every second
+    }
+  }
+
+  function showQuestion(question) {
+    questionElement.textContent = question.question;
+    optionsContainer.innerHTML = '';
+    question.options.forEach((option, index) => {
+      const label = document.createElement('label');
+      label.innerHTML = `<input type="radio" name="answer" value="${option}"> ${option}`;
+      optionsContainer.appendChild(label);
+    });
+  }
+
+  function loadNextQuestion() {
+    if (currentQuestionIndex < questions.length - 1) {
+      currentQuestionIndex++;
+      showQuestion(questions[currentQuestionIndex]);
+    } else {
+      clearInterval(timerInterval);
+      alert("Quiz completed!");
+    }
+  }
+
+  startTimer();
+  showQuestion(questions[currentQuestionIndex]);
+  nextButton.addEventListener('click', loadNextQuestion);
+    </script>
+</body>
+</html>
+

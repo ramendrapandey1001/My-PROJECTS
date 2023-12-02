@@ -1,0 +1,273 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <title>Quiz</title>
+    <style>
+        .quiz-container {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f4f4f4;
+            border-radius: 5px;
+            border: 2px solid black;
+        }
+
+        .quiz-header {
+            text-align: center;
+        }
+
+        .quiz-timer {
+            font-size: 18px;
+            margin-bottom: 20px;
+            float:right;
+            width:100px;
+            
+            background-color:forestgreen;
+        }
+
+        .quiz-question {
+            font-size: 22px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .quiz-options {
+            list-style: none;
+            padding: 0;
+            margin-bottom: 20px;
+        }
+
+        .quiz-option {
+            margin-bottom: 10px;
+        }
+
+        .quiz-controls {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .quiz-button {
+            background-color: #4CAF50; /* Green */
+            border: none;
+            color: white;
+            padding: 15px 32px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 12px; /* Rounded corners */
+        }
+
+        .quiz-results {
+            display: none;
+            text-align: center;
+            font-size: 22px;
+            margin-top: 20px
+        }
+    </style>
+</head>
+<body>
+    <div class="quiz-container">
+        <div class="quiz-header">
+            <div class="quiz-timer" id="quizclock"><span id="hours">00</span>:<span id="minutes">00</span>:<span id="time">10</span> </div>
+        </div>
+        <form id="quiz-form">
+            <div class="quiz-question">Question <span id="question-number">1</span></div>
+            <ul class="quiz-options">
+                <li class="quiz-option"><input type="radio" name="option" value="A">Option A</li>
+                <li class="quiz-option"><input type="radio" name="option" value="B">Option B</li>
+                <li class="quiz-option"><input type="radio" name="option" value="C">Option C</li>
+                <li class="quiz-option"><input type="radio" name="option" value="D">Option D</li>
+            </ul>
+            <div class="quiz-controls">
+                <button type="button" class="quiz-button" id="previous-button">Previous</button>
+                <button type="button" class="quiz-button" id="next-button">Next</button>
+                <button type="submit" class="quiz-button">Submit</button>
+                @* <a href="Submit" class="quiz-button">Submit</a>*@
+            </div>
+        </form action= "submit">
+        <div class="quiz-results">
+            <table style="text-align:center; border-block:solid">
+                <tr>
+                    <th>
+                        Attampted Question
+                    </th>
+                    <th>
+                        <span id="attamptedQuestions" name="attamptedQuestions"> </span>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Total Question
+                    </th>
+                    <th>
+                        <span id="totalQuestions" name="totalQuestions"> </span>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Markes Obtained
+                    </th>
+                    <th>
+                        <span id="marks" name="marks"></span>
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Persentage
+                    </th>
+                    <th>
+                        <span id="score" name="percentage"></span>
+                    </th>
+                </tr>
+            </table>
+            <a href="index">End session</a>
+        </div>
+    </div>
+
+    <script>
+
+        var questions = [
+            { question: "Question 1", options: ["Option A", "Option B", "Option C", "Option D"], correct: "A" },
+            { question: "Question 2", options: ["Option A", "Option B", "Option C", "Option D"], correct: "B" },
+            { question: "Question 3", options: ["Option A", "Option B", "Option C", "Option D"], correct: "C" },
+            { question: "Question 4", options: ["Option A", "Option B", "Option C", "Option D"], correct: "D" },
+        ];
+
+
+        var currentQuestion = 0;
+        var answers = [];
+
+
+        var quizForm = document.getElementById("quiz-form");
+        var questionNumberElement = document.getElementById("question-number");
+        var optionsElement = document.querySelector(".quiz-options");
+        var previousButton = document.getElementById("previous-button");
+        var nextButton = document.getElementById("next-button");
+
+
+        var hourselement = document.getElementById("hours");
+        var hoursremaining = parseInt(hourselement.textContent);
+        var minuteslemnt = document.getElementById("minutes");
+        var minutesremaining = parseInt(minuteslemnt.textContent);
+        var timeElement = document.getElementById("time");
+        var timeRemaining = parseInt(timeElement.textContent);
+
+
+
+
+
+
+        //var timer = setInterval(function () {
+        //    timeRemaining--;
+        //    timeElement.textContent = timeRemaining;
+
+        //    if (timeRemaining === 0 && hoursremaining == 0 && minutesremaining == 0) {
+        //        clearInterval(timer);
+        //        submitQuiz();
+        //    }
+        //}, 1000);
+
+
+        function updateQuestion() {
+            var question = questions[currentQuestion];
+            questionNumberElement.textContent = currentQuestion + 1;
+            optionsElement.innerHTML = "";
+
+            for (var i = 0; i < question.options.length; i++) {
+                var option = question.options[i];
+                var li = document.createElement("li");
+                li.className = "quiz-option";
+
+                li.innerHTML = '<input type="radio" name="option" value="' + String.fromCharCode(65 + i) + '">' + option;
+
+                optionsElement.appendChild(li);
+            }
+
+            if (answers[currentQuestion]) {
+                var input = document.querySelector('input[value="' + answers[currentQuestion] + '"]');
+                if (input) {
+                    input.checked = true;
+                }
+            }
+
+            previousButton.disabled = currentQuestion === 0;
+            nextButton.disabled = currentQuestion === questions.length - 1;
+        }
+
+
+        previousButton.addEventListener("click", function () {
+            currentQuestion--;
+            updateQuestion();
+        });
+
+
+        nextButton.addEventListener("click", function () {
+            currentQuestion++;
+            updateQuestion();
+        });
+
+
+        quizForm.addEventListener("submit", function (event) {
+            event.preventDefault();
+            submitQuiz();
+        });
+
+        function submitQuiz() {
+            clearInterval(timer);
+
+            var score = 0;
+
+            for (var i = 0; i < questions.length; i++) {
+                var question = questions[i];
+                if (answers[i] === question.correct) {
+                    score++;
+                }
+            }
+
+            var percentage = score / questions.length * 100;
+            document.getElementById("score").textContent = percentage.toFixed(2);
+            document.getElementById("marks").textContent = score.toFixed(2);
+            document.getElementById("totalQuestions").textContent = questions.length;
+            document.getElementById("attamptedQuestions").textContent = answers.length;
+            quizForm.style.display = "none";
+            document.querySelector(".quiz-results").style.display = "block";
+        }
+
+
+        quizForm.addEventListener("change", function (event) {
+            if (event.target.name === "option") {
+                answers[currentQuestion] = event.target.value;
+            }
+        });
+
+        updateQuestion();
+
+        var mydiv = document.getElementById("quizclock");
+
+        var timer = setInterval(function () {
+
+
+            if (timeRemaining == 0 && minutesremaining != 0) {
+                timeRemaining = 60;
+                minutesremaining--;
+                minuteslemnt.textContent = minutesremaining;
+            }
+            if (minutesremaining == 0 && hoursremaining != 0) {
+                minutesremaining = 60;
+                hoursremaining--;
+                hourselement.textContent = hoursremaining;
+            }
+            if (timeRemaining == 0 && minutesremaining == 0 && hoursremaining == 0) {
+                clearInterval(timer);
+                submitQuiz();
+            }
+            
+            else { timeRemaining--; timeElement.textContent = timeRemaining; }
+
+        }, 1000);
+        
+    </script>
+</body>
+</html>
