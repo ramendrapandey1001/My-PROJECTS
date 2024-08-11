@@ -16,11 +16,11 @@ namespace Business_Logic_Layer
             String privilege;
            
                  privilege = _db.login(username, password);
-            
+         
             
             if (privilege.Equals("true")) return "Welcome! to the Admin login";
             
-            if (privilege.Equals("false")) return "Welcome! to the Student login";
+           else if (privilege.Equals("false")) return "Welcome! to the Student login";
 
             else  return "Wrong username or password"; 
         }

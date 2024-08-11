@@ -34,7 +34,7 @@ namespace OnlineTestWebApp.Controllers
 
             if (privilege.Equals("true")) return View("leaderboard");
 
-            if (privilege.Equals("false")) return View("instructions");
+           else if (privilege.Equals("false")) return View("instructions");
 
             else return View("Index");
             
